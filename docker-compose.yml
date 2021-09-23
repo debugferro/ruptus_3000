@@ -1,0 +1,39 @@
+# Version of docker-compose
+version: '3.9'
+
+services:
+  phoenix:
+    build:
+      context: .
+    environment:
+      # Variables to connect to our Postgres server
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: ruptus_3000_dev
+      PGPORT: 5432
+      # Hostname of our Postgres container
+      PGHOST: db
+    ports:
+      # Mapping the port to make the Phoenix app accessible outside of the container
+      - 4000:4000
+    depends_on:
+      # The db container needs to be started before we start this container
+      - db
+  db:
+    # We use the predefined Postgres image
+    image: postgres:13-alpine
+    environment:
+      # Set user/password for Postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ruptus_3000_dev
+      # Set a path where Postgres should store the data
+      # PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+# Define the volumes
+# volumes:
+#   - pgdata:/var/lib/postgresql/data/pgdata
