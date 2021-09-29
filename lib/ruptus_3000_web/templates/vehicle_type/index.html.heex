@@ -1,0 +1,32 @@
+<h1>Listing Vehicle types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>Max range</th>
+      <th>Priority range start</th>
+      <th>Priority range end</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for vehicle_type <- @vehicle_types do %>
+    <tr>
+      <td><%= vehicle_type.label %></td>
+      <td><%= vehicle_type.max_range %></td>
+      <td><%= vehicle_type.priority_range_start %></td>
+      <td><%= vehicle_type.priority_range_end %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.vehicle_type_path(@conn, :show, vehicle_type) %></span>
+        <span><%= link "Edit", to: Routes.vehicle_type_path(@conn, :edit, vehicle_type) %></span>
+        <span><%= link "Delete", to: Routes.vehicle_type_path(@conn, :delete, vehicle_type), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Vehicle type", to: Routes.vehicle_type_path(@conn, :new) %></span>

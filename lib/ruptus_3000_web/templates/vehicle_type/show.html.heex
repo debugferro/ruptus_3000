@@ -1,0 +1,28 @@
+<h1>Show Vehicle type</h1>
+
+<ul>
+
+  <li>
+    <strong>Label:</strong>
+    <%= @vehicle_type.label %>
+  </li>
+
+  <li>
+    <strong>Max range:</strong>
+    <%= @vehicle_type.max_range %>
+  </li>
+
+  <li>
+    <strong>Priority range start:</strong>
+    <%= @vehicle_type.priority_range_start %>
+  </li>
+
+  <li>
+    <strong>Priority range end:</strong>
+    <%= @vehicle_type.priority_range_end %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.vehicle_type_path(@conn, :edit, @vehicle_type) %></span> |
+<span><%= link "Back", to: Routes.vehicle_type_path(@conn, :index) %></span>
