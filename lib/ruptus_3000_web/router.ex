@@ -21,9 +21,11 @@ defmodule Ruptus3000Web.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Ruptus3000Web do
-  #   pipe_through :api
-  # end
+  scope "/api/v1", Ruptus3000Web.Api.V1 do
+    pipe_through :api
+
+    post "/delivery/route", DeliveryController, :route
+  end
 
   # Enables LiveDashboard only for development
   #
