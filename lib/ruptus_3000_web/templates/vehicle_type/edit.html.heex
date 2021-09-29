@@ -1,0 +1,5 @@
+<h1>Edit Vehicle type</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.vehicle_type_path(@conn, :update, @vehicle_type)) %>
+
+<span><%= link "Back", to: Routes.vehicle_type_path(@conn, :index) %></span>

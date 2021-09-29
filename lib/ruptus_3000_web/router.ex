@@ -18,6 +18,7 @@ defmodule Ruptus3000Web.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/vehicle_type", VehicleTypeController
   end
 
   # Other scopes may use custom stacks.
