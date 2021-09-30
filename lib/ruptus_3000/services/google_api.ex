@@ -2,7 +2,7 @@ defmodule Ruptus3000.Services.GoogleApi do
   alias HTTPoison
   alias Plug.Conn.Status
   @behaviour Ruptus3000.Services.RoutingApi
-  @api_key Application.compile_env!(:ruptus_3000, :routing_api_key)
+  @api_key Application.get_env(:ruptus_3000, :routing_api_key)
   @base_url "https://maps.googleapis.com"
   @route_url "/maps/api/directions/json"
 
