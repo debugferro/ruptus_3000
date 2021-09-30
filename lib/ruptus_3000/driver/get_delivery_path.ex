@@ -1,6 +1,6 @@
 defmodule Ruptus3000.Driver.GetDeliveryPath do
   @moduledoc """
-    This handle is responsible for returning the distance, time and polyline
+    This handler is responsible for returning the distance, time and polyline
     from the collect point to the delivery point, which is a common path for all delivery persons.
 
     It receives a map with the following information:
