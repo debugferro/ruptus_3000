@@ -14,7 +14,6 @@ defmodule Ruptus3000.Services.GoogleApi do
           {:ok, %{required(String.t()) => any()}}
           | {:error, String.t(), String.t()}
           | {:error, atom()}
-
   def request_route(start_point, end_point) do
     params = %{
       key: @api_key,
