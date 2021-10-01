@@ -11,7 +11,7 @@ defmodule Ruptus3000.Driver.SelectDriversDistance do
     drivers = select_delivery_people(delivery_data["delivery_people"], result.to_delivery_point.distance)
     case drivers do
         [] -> {:error, "Não há entregadores disponíveis.", :no_delivery_person}
-        [_ | _] -> {:ok, delivery_data, build_return(drivers, result)}
+        _ -> {:ok, delivery_data, build_return(drivers, result)}
     end
   end
 
