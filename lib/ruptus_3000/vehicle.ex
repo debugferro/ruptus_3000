@@ -108,6 +108,6 @@ defmodule Ruptus3000.Vehicle do
   end
 
   def build_label_list(vehicles) do
-    Enum.map(vehicles, fn vehicle -> vehicle.label end)
+    Enum.map(vehicles, &(&1.label))
   end
 end
