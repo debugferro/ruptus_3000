@@ -4,9 +4,9 @@ defmodule Ruptus3000.Vehicle.VehicleType do
 
   schema "vehicle_types" do
     field :label, :string
-    field :max_range, :integer
-    field :priority_range_end, :integer
-    field :priority_range_start, :integer
+    field :max_range, :float
+    field :priority_range_end, :float
+    field :priority_range_start, :float
 
     timestamps()
   end

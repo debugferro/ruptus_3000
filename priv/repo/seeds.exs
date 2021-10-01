@@ -13,16 +13,15 @@ alias Ruptus3000.Repo
 alias Ruptus3000.Vehicle.VehicleType
 
 Repo.insert!(%VehicleType{
-    label: "bike",
-    max_range: 2,
-    priority_range_start: 0,
-    priority_range_end: 2
+  label: "bike",
+  max_range: 2.0,
+  priority_range_start: 0.0,
+  priority_range_end: 2.0
 })
 
 Repo.insert!(%VehicleType{
-    label: "motorcycle",
-    max_range: 30,
-    priority_range_start: 2,
-    priority_range_end: 10
+  label: "motorcycle",
+  max_range: 30.0,
+  priority_range_start: 2.0,
+  priority_range_end: 10.0
 })
-

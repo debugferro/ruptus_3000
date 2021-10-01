@@ -101,4 +101,13 @@ defmodule Ruptus3000.Vehicle do
   def change_vehicle_type(%VehicleType{} = vehicle_type, attrs \\ %{}) do
     VehicleType.changeset(vehicle_type, attrs)
   end
+
+  def get_vehicles_by_max_range(distance) do
+    from(v in VehicleType, where: v.max_range >= ^distance)
+    |> Repo.all()
+  end
+
+  def build_label_list(vehicles) do
+    Enum.map(vehicles, &(&1.label))
+  end
 end

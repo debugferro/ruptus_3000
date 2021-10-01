@@ -4,10 +4,9 @@ defmodule Ruptus3000.Repo.Migrations.CreateVehicleTypes do
   def change do
     create table(:vehicle_types) do
       add :label, :string
-      add :max_range, :integer
-      add :priority_range_start, :integer
-      add :priority_range_end, :integer
-
+      add :max_range, :float
+      add :priority_range_start, :float
+      add :priority_range_end, :float
       timestamps()
     end
   end
