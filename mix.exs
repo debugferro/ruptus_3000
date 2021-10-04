@@ -51,7 +51,8 @@ defmodule Ruptus3000.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.8"},
-      {:poison, "~> 5.0"}
+      {:poison, "~> 5.0"},
+      {:haversine, "~> 0.1.0"}
     ]
   end
 
