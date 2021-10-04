@@ -8,27 +8,39 @@ defmodule Ruptus3000.Driver.SelectDriversDistance do
   alias Ruptus3000.Vehicle
 
   def handle({:ok, delivery_data, result}) do
-    drivers = select_delivery_people(delivery_data["delivery_people"], result.to_delivery_point.distance)
+    vehicles = Vehicle.get_vehicles_by_max_range(result.to_delivery_point.distance)
+    drivers = select_delivery_people(delivery_data["delivery_people"], vehicles)
+
     case drivers do
         [] -> {:error, "Não há entregadores disponíveis.", :no_delivery_person}
-        _ -> {:ok, delivery_data, build_return(drivers, result)}
+        _ -> {:ok, delivery_data, build_return(drivers, vehicles, result)}
     end
   end
 
   def handle({:error, message, status}), do: {:error, message, status}
   def handle({:error, status}), do: {:error, status}
 
-  defp select_delivery_people(delivery_people, distance) do
-    vehicles =
-      Vehicle.get_vehicles_by_max_range(distance)
+  defp select_delivery_people(delivery_people, vehicles) do
+    vehicle_labels = vehicles
       |> Vehicle.build_label_list()
 
     Enum.filter(delivery_people, fn person ->
-      Enum.member?(vehicles, person["vehicle"])
+      Enum.member?(vehicle_labels, person["vehicle"])
     end)
   end
 
-  defp build_return(drivers, result) do
+  defp build_return(drivers, vehicles, result) do
     Map.put(result, :delivery_people, drivers)
+    |> Map.put(:vehicles, build_vehicles_map(vehicles))
+  end
+
+  defp build_vehicles_map(vehicles) do
+    Enum.reduce(vehicles, %{}, fn vehicle, acc ->
+      Map.put(acc, vehicle.label, %{
+        max_range: vehicle.max_range,
+        priority_range_start: vehicle.priority_range_start,
+        priority_range_end: vehicle.priority_range_end
+      })
+    end)
   end
 end
