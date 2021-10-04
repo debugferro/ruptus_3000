@@ -1,4 +1,8 @@
 defmodule Ruptus3000.Driver.CalcStraightPath do
+  @moduledoc """
+    This handler is responsible for calculating a straigh path from each driver's localization to
+    the collect point localization.
+  """
   @behaviour Ruptus3000.Driver.Handler
   alias Haversine
   alias Ruptus3000.Vehicle.Converter
