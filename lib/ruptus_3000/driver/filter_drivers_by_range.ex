@@ -15,7 +15,11 @@ defmodule Ruptus3000.Driver.FilterDriversByRange do
           result.vehicles[driver["vehicle"]][:max_range]
       end)
 
-    {:ok, delivery_data, Map.put(result, :delivery_people, drivers)}
+    if drivers == [] do
+      {:error, "Não há entregadores disponíveis.", :no_delivery_person}
+    else
+      {:ok, delivery_data, Map.put(result, :delivery_people, drivers)}
+    end
   end
 
   def handle({:error, message, status}), do: {:error, message, status}
