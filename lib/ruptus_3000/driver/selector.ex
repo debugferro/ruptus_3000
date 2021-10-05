@@ -2,12 +2,8 @@ defmodule Ruptus3000.Driver.Selector do
   @moduledoc """
     TO DO
   """
-
   @behaviour Ruptus3000.Driver.MainBehaviour
-
-  alias Ruptus3000.Driver.GetDeliveryPath
-  alias Ruptus3000.Driver.SelectDriversDistance
-  alias Ruptus3000.Driver.CalcStraightPath
+  alias Ruptus3000.Driver.{GetDeliveryPath, SelectDriversDistance, CalcStraightPath, GetDriversRoutes}
 
   @spec start(map) :: {:ok, map()}
   def start(delivery_data) do
@@ -15,5 +11,6 @@ defmodule Ruptus3000.Driver.Selector do
     |> GetDeliveryPath.handle()
     |> SelectDriversDistance.handle()
     |> CalcStraightPath.handle()
+    |> GetDriversRoutes.handle()
   end
 end
