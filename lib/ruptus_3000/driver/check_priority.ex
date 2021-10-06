@@ -26,5 +26,5 @@ defmodule Ruptus3000.Driver.CheckPriority do
   end
 
   defp has_priority?(vehicle, total_distance),
-    do: vehicle.priority_start <= total_distance and vehicle.priority_end >= total_distance
+    do: vehicle.priority_range_start <= total_distance and vehicle.priority_range_end >= total_distance
 end
