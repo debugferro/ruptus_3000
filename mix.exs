@@ -52,7 +52,8 @@ defmodule Ruptus3000.MixProject do
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.8"},
       {:poison, "~> 5.0"},
-      {:haversine, "~> 0.1.0"}
+      {:haversine, "~> 0.1.0"},
+      {:mimic, "~> 1.5", only: :test}
     ]
   end
 

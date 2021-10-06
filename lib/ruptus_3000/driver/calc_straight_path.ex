@@ -5,7 +5,7 @@ defmodule Ruptus3000.Driver.CalcStraightPath do
   """
   @behaviour Ruptus3000.Driver.Handler
   alias Haversine
-  alias Ruptus3000.Vehicle.Converter
+  alias Ruptus3000.Driver.Helpers
 
   @spec handle({:ok, map(), map()}) ::
           {:error, atom} | {:error, String.t(), atom()} | {:ok, map(), map()}
@@ -24,7 +24,7 @@ defmodule Ruptus3000.Driver.CalcStraightPath do
           build_localization(driver["localization"]),
           build_localization(delivery_data["collect_point"]["localization"])
         )
-        |> Converter.meters_to_km()
+        |> Helpers.meters_to_km()
 
       Map.put(driver, :straight_distance, distance)
     end)
