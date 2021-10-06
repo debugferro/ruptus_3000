@@ -26,7 +26,7 @@ defmodule Ruptus3000.Driver.CalcStraightPath do
         )
         |> Helpers.meters_to_km()
 
-      Map.put(driver, :straight_distance, distance)
+      Map.put(driver, :to_collect_point, %{distance: distance})
     end)
   end
 
