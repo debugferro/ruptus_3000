@@ -1,16 +1,18 @@
 defmodule Ruptus3000.Driver.CalcStraightPath do
   @moduledoc """
-    This handler is responsible for calculating a straigh path from each driver's localization to
+    This handler is responsible for calculating a straigh path from each driver's locations to
     the collect point localization.
   """
-  @behaviour Ruptus3000.Driver.Handler
-  alias Haversine
-  alias Ruptus3000.Driver.Helpers
+  @behaviour Ruptus3000.Driver.HandlerBehaviour
+  require Haversine
 
-  @spec handle({:ok, map(), map()}) ::
-          {:error, atom} | {:error, String.t(), atom()} | {:ok, map(), map()}
+  alias Ruptus3000.Driver.Helpers
+  alias Ruptus3000.Types.Error
+
+  @spec handle({:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
+          Error.basic_tuple() | Error.detailed_tuple() | {:ok, map(), map()}
   def handle({:ok, delivery_data, result}) do
-    drivers = calculate(result.delivery_people, delivery_data)
+    drivers = calculate(result.drivers, delivery_data)
     {:ok, delivery_data, build_return(result, drivers)}
   end
 
@@ -30,6 +32,6 @@ defmodule Ruptus3000.Driver.CalcStraightPath do
     end)
   end
 
-  defp build_return(result, drivers), do: Map.put(result, :delivery_people, drivers)
+  defp build_return(result, drivers), do: Map.put(result, :drivers, drivers)
   defp build_localization(localization), do: {localization["longitude"], localization["latitude"]}
 end
