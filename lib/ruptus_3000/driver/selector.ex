@@ -1,6 +1,7 @@
 defmodule Ruptus3000.Driver.Selector do
   @moduledoc """
-    TO DO
+    Selector is a module responsible for calling all necessary handlers to return the best driver
+    to perform a delivery.
   """
   @behaviour Ruptus3000.Driver.MainBehaviour
   alias Ruptus3000.Types.Error
