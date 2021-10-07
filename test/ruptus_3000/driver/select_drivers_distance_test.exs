@@ -2,10 +2,7 @@ defmodule Ruptus3000.Driver.SelectDriversDistanceTest do
   use ExUnit.Case, async: true
   use Mimic
 
-  alias Ruptus3000.Driver.SelectDriversDistance
-  alias Ruptus3000.Vehicle
-  alias Ruptus3000.GoogleApiHelper
-  alias Ruptus3000.HandlersHelpers
+  alias Ruptus3000.{Driver.SelectDriversDistance, Vehicle, HandlersHelpers}
 
   @delivery_data %{
     "delivery_people" => [%{
