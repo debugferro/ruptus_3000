@@ -14,16 +14,16 @@ defmodule Ruptus3000.Driver.CheckPriority do
   def handle({:error, status}), do: {:error, status}
 
   defp check_priority(result) do
-    Enum.map(result.delivery_people, fn driver ->
+    Enum.filter(result.delivery_people, fn driver ->
       total_distance = driver.to_collect_point.distance + result.to_delivery_point.distance
 
-      Map.put(
-        driver,
-        :priority,
-        has_priority?(result.vehicles[driver["vehicle"]], total_distance)
-      )
+      has_priority?(result.vehicles[driver["vehicle"]], total_distance)
     end)
+    |> return_drivers(result)
   end
+
+  defp return_drivers(filtered, _non_filtered) when length(filtered) >= 1, do: filtered
+  defp return_drivers(_filtered, non_filtered), do: non_filtered
 
   defp has_priority?(vehicle, total_distance),
     do: vehicle.priority_range_start <= total_distance and vehicle.priority_range_end >= total_distance
