@@ -38,7 +38,7 @@ defmodule Ruptus3000.Services.GoogleApi do
 
     %{
       distance: Helpers.meters_to_km(main_leg["distance"]["value"]),
-      duration: main_leg["duration"]["value"],
+      duration: Helpers.seconds_to_minutes(main_leg["duration"]["value"]),
       polyline: route["overview_polyline"]["points"]
     }
   end
