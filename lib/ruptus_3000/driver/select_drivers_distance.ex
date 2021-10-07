@@ -3,34 +3,37 @@ defmodule Ruptus3000.Driver.SelectDriversDistance do
       This handler is reponsible for returning all drivers that have a vehicle
       with a max range greater than or equal to the delivery distance.
   """
-
-  @behaviour Ruptus3000.Driver.Handler
+  @behaviour Ruptus3000.Driver.HandlerBehaviour
   alias Ruptus3000.Vehicle
+  alias Ruptus3000.Types.Error
 
+  @spec handle({:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
+          {:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()
   def handle({:ok, delivery_data, result}) do
     vehicles = Vehicle.get_vehicles_by_max_range(result.to_delivery_point.distance)
-    drivers = select_delivery_people(delivery_data["delivery_people"], vehicles)
+    drivers = select_drivers(delivery_data["drivers"], vehicles)
 
     case drivers do
-        [] -> {:error, "Não há entregadores disponíveis.", :no_delivery_person}
-        _ -> {:ok, delivery_data, build_return(drivers, vehicles, result)}
+      [] -> {:error, "Não há entregadores disponíveis.", :no_delivery_person}
+      _ -> {:ok, delivery_data, build_return(drivers, vehicles, result)}
     end
   end
 
   def handle({:error, message, status}), do: {:error, message, status}
   def handle({:error, status}), do: {:error, status}
 
-  defp select_delivery_people(delivery_people, vehicles) do
-    vehicle_labels = vehicles
+  defp select_drivers(drivers, vehicles) do
+    vehicle_labels =
+      vehicles
       |> Vehicle.build_label_list()
 
-    Enum.filter(delivery_people, fn person ->
-      Enum.member?(vehicle_labels, person["vehicle"])
+    Enum.filter(drivers, fn driver ->
+      Enum.member?(vehicle_labels, driver["vehicle"])
     end)
   end
 
   defp build_return(drivers, vehicles, result) do
-    Map.put(result, :delivery_people, drivers)
+    Map.put(result, :drivers, drivers)
     |> Map.put(:vehicles, build_vehicles_map(vehicles))
   end
 
