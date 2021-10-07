@@ -5,7 +5,7 @@ defmodule Ruptus3000.Driver.Selector do
   @behaviour Ruptus3000.Driver.MainBehaviour
   alias Ruptus3000.Types.Error
   alias Ruptus3000.Driver.{GetDeliveryPath, SelectDriversDistance, CalcStraightPath,
-  GetDriversRoutes, FilterDriversByRange, CheckPriority, SelectBestDriver}
+  GetDriversRoutes, FilterDrivers, CheckPriority, SelectBestDriver}
 
   @spec start(map) :: {:ok, map()} | Error.detailed_tuple() | Error.basic_tuple()
   def start(delivery_data) do
@@ -13,9 +13,9 @@ defmodule Ruptus3000.Driver.Selector do
     |> GetDeliveryPath.handle()
     |> SelectDriversDistance.handle()
     |> CalcStraightPath.handle()
-    |> FilterDriversByRange.handle()
+    |> FilterDrivers.handle()
     |> GetDriversRoutes.handle()
-    |> FilterDriversByRange.handle()
+    |> FilterDrivers.handle()
     |> CheckPriority.handle()
     |> SelectBestDriver.handle()
   end
