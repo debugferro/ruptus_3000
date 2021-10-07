@@ -4,10 +4,12 @@ defmodule Ruptus3000.Driver.CheckPriority do
     true or false.
   """
   @behaviour Ruptus3000.Driver.Handler
+  alias Ruptus3000.Types.Error
+
   @spec handle({:ok, map(), map()}) ::
-          {:error, atom} | {:error, String.t(), atom()} | {:ok, map(), map()}
-  def handle({:ok, delivery_data, result}) do
-    {:ok, delivery_data, Map.put(result, :delivery_people, check_priority(result))}
+          Error.basic_tuple() | Error.detailed_tuple() | {:ok, map()}
+  def handle({:ok, _delivery_data, result}) do
+    {:ok, Map.put(result, :delivery_people, check_priority(result))}
   end
 
   def handle({:error, message, status}), do: {:error, message, status}
