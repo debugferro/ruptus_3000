@@ -34,6 +34,20 @@ defmodule Ruptus3000.Driver.GetDeliveryPathTest do
       assert {:ok, @data, _} = result
     end
 
+    test "It returns a complete unsuccessful response" do
+      GoogleApi
+      |> expect(:request_route, fn _, _ -> {:error, "error", "status"} end)
+
+      assert {:error, "error", "status"} = GetDeliveryPath.handle(@data)
+    end
+
+    test "It returns a basic unsuccessful response" do
+      GoogleApi
+      |> expect(:request_route, fn _, _ -> {:error, "status"} end)
+
+      assert {:error, "status"} = GetDeliveryPath.handle(@data)
+    end
+
     test "It returns a map with the parsed response", %{result: result} do
       {_, _, result_info} = result
       assert %{to_delivery_point: %{ distance: _, duration: _, polyline: _}} = result_info
