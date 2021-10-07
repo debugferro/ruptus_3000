@@ -1,4 +1,4 @@
-defmodule Ruptus3000.Driver.FilterDriversByRange do
+defmodule Ruptus3000.Driver.FilterDrivers do
   @moduledoc """
     This handler filter drivers by adding each driver's collect distance (straight line)
     and the previously routed delivery distance, then comparing it with the driver's vehicle
