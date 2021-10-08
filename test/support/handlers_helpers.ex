@@ -18,5 +18,19 @@ defmodule Ruptus3000.HandlersHelpers do
     }
   ]
 
+  @result %{
+    drivers: [%{
+      "localization" => %{
+        "latitude" => 10,
+        "longitude" => 10
+      }
+    }],
+    to_delivery_point: %{
+      duration: 10,
+      distance: 10
+    }
+  }
+
   def vehicle_query(), do: @vehicle_query
+  def fake_result(), do: @result
 end
