@@ -3,20 +3,20 @@ defmodule Ruptus3000.Driver.CheckPriority do
     This handler adds a priority atom to each driver, and assigns its value to either
     true or false.
   """
-  @behaviour Ruptus3000.Driver.Handler
+  @behaviour Ruptus3000.Driver.HandlerBehaviour
   alias Ruptus3000.Types.Error
 
-  @spec handle({:ok, map(), map()}) ::
+  @spec handle({:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
           Error.basic_tuple() | Error.detailed_tuple() | {:ok, map()}
   def handle({:ok, _delivery_data, result}) do
-    {:ok, Map.put(result, :delivery_people, check_priority(result))}
+    {:ok, Map.put(result, :drivers, check_priority(result))}
   end
 
   def handle({:error, message, status}), do: {:error, message, status}
   def handle({:error, status}), do: {:error, status}
 
   defp check_priority(result) do
-    Enum.filter(result.delivery_people, fn driver ->
+    Enum.filter(result.drivers, fn driver ->
       total_distance = driver.to_collect_point.distance + result.to_delivery_point.distance
 
       has_priority?(result.vehicles[driver["vehicle"]], total_distance)

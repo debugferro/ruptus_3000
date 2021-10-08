@@ -3,7 +3,7 @@ defmodule Ruptus3000.Driver.Selector do
     Selector is a module responsible for calling all necessary handlers to return the best driver
     to perform a delivery.
   """
-  @behaviour Ruptus3000.Driver.MainBehaviour
+  @behaviour Ruptus3000.Driver.SelectorBehaviour
   alias Ruptus3000.Types.Error
   alias Ruptus3000.Driver.{GetDeliveryPath, SelectDriversDistance, CalcStraightPath,
   GetDriversRoutes, FilterDrivers, CheckPriority, SelectBestDriver}

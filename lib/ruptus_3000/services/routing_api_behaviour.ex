@@ -1,4 +1,4 @@
-defmodule Ruptus3000.Services.RoutingApi do
+defmodule Ruptus3000.Services.RoutingApiBehaviour do
   alias Ruptus3000.Types.Coordinates
 
   @callback request_route(Coordinates.t(), Coordinates.t()) ::

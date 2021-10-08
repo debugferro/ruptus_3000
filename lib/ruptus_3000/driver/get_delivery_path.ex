@@ -1,7 +1,7 @@
 defmodule Ruptus3000.Driver.GetDeliveryPath do
   @moduledoc """
-    This handler is responsible for returning the distance, time and polyline
-    from the collect point to the delivery point, which is a common path for all delivery persons.
+    This handler is responsible for returning the route's distance, time and polyline,
+    from the collect point to the delivery point, which is a common route for all drivers.
 
     It receives a map with the following information:
     %{ "collect_point" =>
@@ -14,11 +14,11 @@ defmodule Ruptus3000.Driver.GetDeliveryPath do
       }
     }
   """
-
-  @behaviour Ruptus3000.Driver.Handler
+  @behaviour Ruptus3000.Driver.HandlerBehaviour
   alias Ruptus3000.Services.GoogleApi
-  @spec handle(%{optional(String.t) => any()}) :: {:error, atom} | {:error, String.t(), atom()} | {:ok, map(), map()}
 
+  @spec handle(%{optional(String.t()) => any()}) ::
+          {:error, atom} | {:error, String.t(), atom()} | {:ok, map(), map()}
   def handle(delivery_data) do
     collect_point = delivery_data["collect_point"]["localization"]
     delivery_point = delivery_data["delivery_point"]["localization"]

@@ -2,13 +2,13 @@ defmodule Ruptus3000.Driver.SelectBestDriver do
   @moduledoc """
     This handler returns the fastest driver to be responsible for a delivery.
   """
-  @behaviour Ruptus3000.Driver.Handler
+  @behaviour Ruptus3000.Driver.HandlerBehaviour
   alias Ruptus3000.Types.Error
 
   @spec handle({:ok, map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
           {:ok, map()} | Error.basic_tuple() | Error.detailed_tuple()
   def handle({:ok, result}) do
-    Enum.reduce(result.delivery_people, %{}, fn driver, acc ->
+    Enum.reduce(result.drivers, %{}, fn driver, acc ->
       cond do
         %{} == acc -> driver
         driver["index"] < acc["index"] and driver.total_time > acc.total_time -> acc
