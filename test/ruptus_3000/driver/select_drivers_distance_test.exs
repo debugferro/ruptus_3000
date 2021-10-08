@@ -12,7 +12,13 @@ defmodule Ruptus3000.Driver.SelectDriversDistanceTest do
     %{
       "id" => 2,
       "vehicle" => "motorcycle"
-    }]
+    }],
+    "collect_point" => %{
+      "localization" => %{
+        "latitude" => 1,
+        "longitude" => 1
+      }
+    }
   }
 
   @result %{
