@@ -8,13 +8,13 @@ defmodule Ruptus3000.Driver.SelectBestDriver do
   @spec handle({:ok, map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
           {:ok, map()} | Error.basic_tuple() | Error.detailed_tuple()
   def handle({:ok, result}) do
-    Enum.reduce(result.drivers, %{}, fn driver, acc ->
+    Enum.reduce(result.drivers, %{}, fn driver, previous_driver ->
       cond do
-        %{} == acc -> driver
-        driver["index"] < acc["index"] and driver.total_time > acc.total_time -> acc
-        driver["index"] <= acc["index"] and driver.total_time <= acc.total_time -> driver
-        driver["index"] > acc["index"] and driver.total_time < acc.total_time -> driver
-        driver["index"] >= acc["index"] and driver.total_time >= acc.total_time -> acc
+        %{} == previous_driver -> driver
+        driver["index"] < previous_driver["index"] and driver.total_time > previous_driver.total_time -> previous_driver
+        driver["index"] <= previous_driver["index"] and driver.total_time <= previous_driver.total_time -> driver
+        driver["index"] > previous_driver["index"] and driver.total_time < previous_driver.total_time -> driver
+        driver["index"] >= previous_driver["index"] and driver.total_time >= previous_driver.total_time -> previous_driver
       end
     end)
     |> build_response()
