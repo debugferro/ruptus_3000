@@ -6,34 +6,28 @@ defmodule Ruptus3000.Driver.FilterDrivers do
   @behaviour Ruptus3000.Driver.HandlerBehaviour
   alias Ruptus3000.Types.Error
 
-  @spec handle({:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
-          Error.basic_tuple() | Error.detailed_tuple() | {:ok, map(), map()}
-  def handle({:ok, delivery_data, result}) do
-
-    case filter_drivers_by_range(result, delivery_data["max_delivery_time"]) do
-      [] -> {:error, "Não há entregadores disponíveis.", :no_drivers}
-      drivers -> {:ok, delivery_data, Map.put(result, :drivers, drivers)}
+  @spec handle({:ok, map(), map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
+          Error.basic_tuple() | Error.detailed_tuple() | {:ok, map(), map(), map()}
+  def handle({:ok, driver, delivery_data, result}) do
+    max_time = delivery_data["max_delivery_time"]
+    case is_driver_valid?(driver, result, max_time) do
+      true -> {:ok, driver, delivery_data, result}
+      false -> {:error, "Tempo ou distância máxima ultrapassada", :no_drivers}
     end
   end
 
   def handle({:error, message, status}), do: {:error, message, status}
   def handle({:error, status}), do: {:error, status}
 
-  defp filter_drivers_by_range(%{drivers: [%{to_collect_point: %{duration: _}} | _]} = result, max_time) do
-    Enum.filter(result.drivers, fn driver ->
-      driver.total_distance
-      <=
-      result.vehicles[driver["vehicle"]][:max_range]
+  defp is_driver_valid?(%{to_collect_point: %{duration: _}} = driver, result, max_time) do
+    driver.total_distance <= result.vehicles[driver["vehicle"]][:max_range]
       and
-      driver.total_time
-      <= max_time
-    end)
+    driver.total_time <= max_time
   end
 
-  defp filter_drivers_by_range(result, _max_delivery_time) do
-    Enum.filter(result.drivers, fn driver ->
-      driver.to_collect_point.distance + result.to_delivery_point.distance <=
-        result.vehicles[driver["vehicle"]][:max_range]
-    end)
+  defp is_driver_valid?(driver, result, _max_time) do
+    driver.to_collect_point.distance + result.to_delivery_point.distance
+      <=
+    result.vehicles[driver["vehicle"]][:max_range]
   end
 end
