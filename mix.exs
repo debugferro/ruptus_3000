@@ -53,7 +53,8 @@ defmodule Ruptus3000.MixProject do
       {:httpoison, "~> 1.8"},
       {:poison, "~> 5.0"},
       {:haversine, "~> 0.1.0"},
-      {:mimic, "~> 1.5", only: :test}
+      {:mimic, "~> 1.5", only: :test},
+      {:flow, "~> 1.0"}
     ]
   end
 
