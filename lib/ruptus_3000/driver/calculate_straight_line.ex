@@ -1,16 +1,17 @@
-defmodule Ruptus3000.Driver.CalcStraightPath do
+defmodule Ruptus3000.Driver.CalculateStraightLine do
   @moduledoc """
-    This handler is responsible for calculating a straigh path from each driver's locations to
+    This handler is responsible for calculating a straigh line path from driver's locations to
     the collect point localization.
   """
-  @behaviour Ruptus3000.Driver.HandlerBehaviour
+  @behaviour Ruptus3000.Driver.Behaviour.Handler
   require Haversine
 
   alias Ruptus3000.Driver.Helpers
   alias Ruptus3000.Types.Error
+  alias Ruptus3000.Driver.Behaviour.Handler
 
-  @spec handle({:ok, map(), map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
-          Error.basic_tuple() | Error.detailed_tuple() | {:ok, map(), map(), map()}
+  @spec handle(Handler.payload() | Error.basic_tuple() | Error.detailed_tuple()) ::
+          Error.basic_tuple() | Error.detailed_tuple() | Handler.payload()
   def handle({:ok, driver, delivery_data, result}) do
     distance = calculate(driver["localization"], delivery_data["collect_point"]["localization"])
     {:ok, build_driver(driver, distance), delivery_data, result}
