@@ -1,6 +1,6 @@
 defmodule Ruptus3000.Routing.BuildResponse do
   @moduledoc """
-    This handler returns the fastest driver to be responsible for a delivery.
+    This handler build the final response with joined polylines.
   """
   @behaviour Ruptus3000.Routing.Behaviour.Handler
   alias Ruptus3000.Types.Error
