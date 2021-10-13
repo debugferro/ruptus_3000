@@ -1,9 +1,9 @@
-defmodule Ruptus3000.Driver.CheckPriority do
+defmodule Ruptus3000.Routing.CheckPriority do
   @moduledoc """
     This handler adds a priority atom to each driver, and assigns its value to either
     true or false.
   """
-  @behaviour Ruptus3000.Driver.HandlerBehaviour
+  @behaviour Ruptus3000.Routing.Behaviour.Handler
   alias Ruptus3000.Types.Error
 
   @spec handle({:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
