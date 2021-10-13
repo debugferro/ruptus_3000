@@ -1,13 +1,14 @@
-defmodule Ruptus3000.Driver.FilterDrivers do
+defmodule Ruptus3000.Driver.Filter do
   @moduledoc """
-    This handler filter drivers by checking if the delivery distance doesn't exceed the driver's vehicle
+    This handler filter driver by checking if the delivery distance doesn't exceed the driver's vehicle
     maximum allowed range, or the maximum delivery time defined.
   """
-  @behaviour Ruptus3000.Driver.HandlerBehaviour
+  @behaviour Ruptus3000.Driver.Behaviour.Handler
   alias Ruptus3000.Types.Error
+  alias Ruptus3000.Driver.Behaviour.Handler
 
-  @spec handle({:ok, map(), map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
-          Error.basic_tuple() | Error.detailed_tuple() | {:ok, map(), map(), map()}
+  @spec handle(Handler.payload() | Error.basic_tuple() | Error.detailed_tuple()) ::
+    Handler.payload() |Error.basic_tuple() | Error.detailed_tuple()
   def handle({:ok, driver, delivery_data, result}) do
     max_time = delivery_data["max_delivery_time"]
     case is_driver_valid?(driver, result, max_time) do
