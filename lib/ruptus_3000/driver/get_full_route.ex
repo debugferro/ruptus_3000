@@ -1,15 +1,16 @@
-defmodule Ruptus3000.Driver.GetDriversRoutes do
+defmodule Ruptus3000.Driver.GetFullRoute do
   @moduledoc """
-    This handler is responsible for calculating, asynchronously, the route of all drivers from their localization
+    This handler is responsible for calculating, the route of a driver from its current localization
     to the collect point.
   """
-  @behaviour Ruptus3000.Driver.HandlerBehaviour
+  @behaviour Ruptus3000.Driver.Behaviour.Handler
   alias Ruptus3000.Services.GoogleApi
   alias Ruptus3000.Driver.Helpers
   alias Ruptus3000.Types.Error
+  alias Ruptus3000.Driver.Behaviour.Handler
 
-  @spec handle({:ok, map(), map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
-          Error.basic_tuple() | Error.detailed_tuple() | {:ok, map(), map(), map()}
+  @spec handle(Handler.payload() | Error.basic_tuple() | Error.detailed_tuple()) ::
+          Error.basic_tuple() | Error.detailed_tuple() | Handler.payload()
   def handle({:ok, driver, delivery_data, result}) do
     case request_api(driver, delivery_data["collect_point"]["localization"], result) do
       {:ok, driver} -> {:ok, driver, delivery_data, result}
