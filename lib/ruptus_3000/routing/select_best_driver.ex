@@ -6,7 +6,7 @@ defmodule Ruptus3000.Routing.SelectBestDriver do
   alias Ruptus3000.Types.Error
 
   @spec handle({:ok, map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
-          {:ok, map()} | Error.basic_tuple() | Error.detailed_tuple()
+          {:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()
   def handle({:ok, result}) do
     Enum.reduce(result.drivers, %{}, fn driver, previous_driver ->
       cond do
@@ -17,11 +17,11 @@ defmodule Ruptus3000.Routing.SelectBestDriver do
         driver["index"] >= previous_driver["index"] and driver.total_time >= previous_driver.total_time -> previous_driver
       end
     end)
-    |> build_response()
+    |> build_response(result)
   end
 
   def handle(error), do: error
 
-  defp build_response([]), do: {:error, "No drivers available", :no_drivers}
-  defp build_response(selected_driver), do: {:ok, selected_driver}
+  defp build_response([], _result), do: {:error, "No drivers available", :no_drivers}
+  defp build_response(selected_driver, result), do: {:ok, selected_driver, result}
 end
