@@ -29,13 +29,12 @@ defmodule Ruptus3000.Services.GoogleApi do
 
   @spec filter_response(map()) :: %{
     distance: String.t() | integer() | float(),
-    duration: String.t() | integer(),
+    duration: String.t() | integer() | float(),
     polyline: String.t()
   }
   def filter_response(response) do
     route = response["routes"] |> get_route(0)
     main_leg = route["legs"] |> get_leg(0)
-
     %{
       distance: Helpers.meters_to_km(main_leg["distance"]["value"]),
       duration: Helpers.seconds_to_minutes(main_leg["duration"]["value"]),
