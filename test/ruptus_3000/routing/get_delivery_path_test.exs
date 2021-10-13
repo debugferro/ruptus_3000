@@ -1,8 +1,8 @@
-defmodule Ruptus3000.Driver.GetDeliveryPathTest do
+defmodule Ruptus3000.Routing.GetDeliveryPathTest do
   use ExUnit.Case, async: true
   use Mimic
 
-  alias Ruptus3000.Driver.GetDeliveryPath
+  alias Ruptus3000.Routing.GetDeliveryPath
   alias Ruptus3000.Services.GoogleApi
   alias Ruptus3000.GoogleApiHelper
 

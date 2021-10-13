@@ -12,7 +12,7 @@ defmodule Ruptus3000.Services.RoutingApiBehaviour do
               | {:error, atom()}
   @callback filter_response(map()) :: %{
               distance: String.t() | integer() | float(),
-              duration: String.t() | integer(),
+              duration: String.t() | integer() | float(),
               polyline: String.t()
             }
 end
