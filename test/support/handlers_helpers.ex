@@ -9,22 +9,7 @@ defmodule Ruptus3000.HandlersHelpers do
     }
   ]
 
-  @bike_query [
-    %{
-      label: "bike",
-      max_range: 2.0,
-      priority_range_end: 2.0,
-      priority_range_start: 0.0,
-    }
-  ]
-
   @result %{
-    drivers: [%{
-      "localization" => %{
-        "latitude" => 10,
-        "longitude" => 10
-      }
-    }],
     to_delivery_point: %{
       duration: 10,
       distance: 10
