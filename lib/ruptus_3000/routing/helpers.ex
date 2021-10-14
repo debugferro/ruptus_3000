@@ -1,4 +1,5 @@
-defmodule Ruptus3000.Driver.Helpers do
+defmodule Ruptus3000.Routing.Helpers do
+
   @spec meters_to_km(number) :: float
   def meters_to_km(distance) do
     distance / 1000
@@ -11,4 +12,9 @@ defmodule Ruptus3000.Driver.Helpers do
   def localization_map(localization) do
     %{latitude: localization["latitude"], longitude: localization["longitude"]}
   end
+
+  def checkpoint_validity(%{"collect_point" => %{"localization" => localization}}, :collect), do: {:ok, localization}
+  def checkpoint_validity(%{"delivery_point" => %{"localization" => localization}}, :delivery), do: {:ok, localization}
+  def checkpoint_validity(_data, :collect), do: {:error, "collect_point"}
+  def checkpoint_validity(_data, :delivery), do: {:error, "delivery_point"}
 end
