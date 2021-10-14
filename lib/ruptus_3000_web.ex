@@ -17,6 +17,29 @@ defmodule Ruptus3000Web do
   and import those modules here.
   """
 
+  def validate do
+    quote do
+      import Plug.Conn
+      use Phoenix.Controller
+      def init(options), do: options
+
+      def call(conn, key) do
+        case __MODULE__.validate_schema(schema() |> IO.inspect(label: "SCHEMA"), conn) do
+          :ok ->
+            conn
+
+          {:error, errors} ->
+            IO.inspect(errors, label: "ERRORS")
+
+            conn
+            |> put_status(:unprocessable_entity)
+            |> json(%{errors: __MODULE__.build_errors(errors)})
+            |> halt()
+        end
+      end
+    end
+  end
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: Ruptus3000Web
