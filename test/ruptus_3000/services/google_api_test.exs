@@ -4,7 +4,7 @@ defmodule Ruptus3000.GoogleApiTest do
 
   alias Ruptus3000.Services.GoogleApi
   alias Ruptus3000.GoogleApiHelper
-  alias Ruptus3000.Vehicle.Converter
+  alias Ruptus3000.Routing.Helpers
 
   @start_coordinates %{latitude: 33.81235029151803, longitude: -117.91837280484145}
   @end_coordinates %{latitude: 34.13824110217347, longitude: -118.3533032001647}
@@ -37,10 +37,11 @@ defmodule Ruptus3000.GoogleApiTest do
 
   describe "GoogleApi.filter_response/1" do
     test "It returns a map with distance, duration and polyline" do
-      expect(Converter, :meters_to_km, fn 57811 -> 57.811 end)
+      expect(Helpers, :meters_to_km, fn 57811 -> 57.811 end)
+      expect(Helpers, :seconds_to_minutes, fn 2871 -> 47.85 end)
 
       {:ok, response} = GoogleApiHelper.common_response()
-      assert %{distance: 57.811, duration: 2871, polyline: "polyline"} =
+      assert %{distance: 57.811, duration: 47.85, polyline: "polyline"} =
                GoogleApi.filter_response(response)
     end
   end
