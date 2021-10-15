@@ -13,8 +13,8 @@ defmodule Ruptus3000.Routing.Helpers do
     %{latitude: localization["latitude"], longitude: localization["longitude"]}
   end
 
-  def checkpoint_validity(%{"collect_point" => %{"localization" => localization}}, :collect), do: {:ok, localization}
-  def checkpoint_validity(%{"delivery_point" => %{"localization" => localization}}, :delivery), do: {:ok, localization}
-  def checkpoint_validity(_data, :collect), do: {:error, "collect_point"}
-  def checkpoint_validity(_data, :delivery), do: {:error, "delivery_point"}
+  def get_localization(%{"collect_point" => %{"localization" => localization}}, :collect), do: {:ok, localization}
+  def get_localization(%{"delivery_point" => %{"localization" => localization}}, :delivery), do: {:ok, localization}
+  def get_localization(_data, :collect), do: {:not_valid, "collect_point"}
+  def get_localization(_data, :delivery), do: {:not_valid, "delivery_point"}
 end
