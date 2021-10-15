@@ -24,19 +24,15 @@ defmodule Ruptus3000.Routing.GetDeliveryPath do
   def handle({:error, message}), do: {:error, message}
 
   def handle(delivery_data) do
-    with {:ok, collect_point} <-
-           Helpers.checkpoint_validity(delivery_data, :collect) |> check_response(),
-         {:ok, delivery_point} <-
-           Helpers.checkpoint_validity(delivery_data, :delivery) |> check_response(),
-         {:ok, route_response} <- GoogleApi.request_route(collect_point, delivery_point) do
-      build_return(route_response, delivery_data)
-    else
-      error -> error
-    end
+    with {:ok, collect_point} <- Helpers.get_localization(delivery_data, :collect),
+      {:ok, delivery_point} <- Helpers.get_localization(delivery_data, :delivery),
+      {:ok, route_response} <- GoogleApi.request_route(collect_point, delivery_point) do
+        build_return(route_response, delivery_data)
+      else
+        {:not_valid, name} -> {:error, payload_error_msg(name), :invalid_payload}
+        error -> error
+      end
   end
-
-  defp check_response({:ok, response}), do: {:ok, response}
-  defp check_response({:error, key}), do: {:error, payload_error_msg(key), :invalid_payload}
 
   defp payload_error_msg(key),
     do: "You need to provide a " <> key <> " with localization, latitude, longitude"
