@@ -1,6 +1,6 @@
 Mimic.copy(Ruptus3000.Services.GoogleApi)
 Mimic.copy(HTTPoison)
-Mimic.copy(Ruptus3000.Driver.Helpers)
+Mimic.copy(Ruptus3000.Routing.Helpers)
 Mimic.copy(Ruptus3000.Vehicle)
 
 ExUnit.start()
