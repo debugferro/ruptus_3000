@@ -5,7 +5,7 @@ defmodule Ruptus3000.Driver.GetFullRoute do
   """
   @behaviour Ruptus3000.Driver.Behaviour.Handler
   alias Ruptus3000.Services.GoogleApi
-  alias Ruptus3000.Driver.Helpers
+  alias Ruptus3000.Routing.Helpers
   alias Ruptus3000.Types.Error
   alias Ruptus3000.Driver.Behaviour.Handler
 
