@@ -51,4 +51,5 @@ defmodule Ruptus3000.HandlersHelpers do
   def vehicle_list(), do: @vehicle_list
   def basic_motorcycle(), do: @basic_motorcycle
   def basic_biker(), do: @basic_biker
+  def custom_driver(time, index), do: %{"index" => index, total_time: time}
 end
