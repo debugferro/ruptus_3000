@@ -4,18 +4,9 @@ defmodule Ruptus3000.Routing.GetVehiclesTest do
 
   alias Ruptus3000.Vehicle
   alias Ruptus3000.Routing.GetVehicles
+  alias Ruptus3000.HandlersHelpers
 
-  @vehicles [%{
-    label: "bike",
-    max_range: 2,
-    priority_range_start: 0,
-    priority_range_end: 2
-  }, %{
-    label: "motorcycle",
-    max_range: 30,
-    priority_range_start: 2.1,
-    priority_range_end: 30
-  }]
+  @vehicles HandlersHelpers.multiple_vehicles_query()
 
   setup_all do
     Vehicle |> expect(:get_vehicles_by_max_range, fn _ -> @vehicles end)
@@ -32,9 +23,9 @@ defmodule Ruptus3000.Routing.GetVehiclesTest do
             priority_range_end: 2
           },
           "motorcycle" => %{
-            max_range: 30,
+            max_range: 30.0,
             priority_range_start: 2.1,
-            priority_range_end: 30
+            priority_range_end: 30.0
           }
         }
       }} = result
