@@ -16,20 +16,26 @@ defmodule Ruptus3000.Routing.GetDeliveryPath do
   """
   @behaviour Ruptus3000.Routing.Behaviour.Handler
   alias Ruptus3000.Services.GoogleApi
+  alias Ruptus3000.Routing.Helpers
   alias Ruptus3000.Types.Error
 
   @spec handle(%{optional(String.t()) => any()}) ::
-    {:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()
-  def handle(delivery_data) do
-    collect_point = delivery_data["collect_point"]["localization"]
-    delivery_point = delivery_data["delivery_point"]["localization"]
+          {:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()
+  def handle({:error, message}), do: {:error, message}
 
-    case GoogleApi.request_route(collect_point, delivery_point) do
-      {:ok, route_response} -> build_return(route_response, delivery_data)
-      {:error, message, status} -> {:error, message, status}
-      {:error, status} -> {:error, status}
-    end
+  def handle(delivery_data) do
+    with {:ok, collect_point} <- Helpers.get_localization(delivery_data, :collect),
+      {:ok, delivery_point} <- Helpers.get_localization(delivery_data, :delivery),
+      {:ok, route_response} <- GoogleApi.request_route(collect_point, delivery_point) do
+        build_return(route_response, delivery_data)
+      else
+        {:not_valid, name} -> {:error, payload_error_msg(name), :invalid_payload}
+        error -> error
+      end
   end
+
+  defp payload_error_msg(key),
+    do: "You need to provide a " <> key <> " with localization, latitude, longitude"
 
   defp build_response(response) do
     %{

@@ -24,7 +24,7 @@ defmodule Ruptus3000.Routing.HandleRouting do
       |> Flow.partition(stages: 1)
       |> Flow.reduce(fn -> [] end, &(call_driver_handling(&1, &2, data)))
       |> Enum.to_list() do
-        [] -> {:error, "Nenhum entregador disponível", :no_drivers}
+        [] -> {:error, "Nenhum entregador elegível", :no_drivers}
         drivers -> {:ok, delivery_data, merge_drivers(drivers, result)}
       end
   end
