@@ -22,6 +22,6 @@ defmodule Ruptus3000.Routing.SelectBestDriver do
 
   def handle(error), do: error
 
-  defp build_response([], _result), do: {:error, "No drivers available", :no_drivers}
+  defp build_response(selected_driver, _result) when map_size(selected_driver) == 0, do: {:error, "No drivers available", :no_drivers}
   defp build_response(selected_driver, result), do: {:ok, selected_driver, result}
 end
