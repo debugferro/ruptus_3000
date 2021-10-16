@@ -46,5 +46,6 @@ defmodule Ruptus3000Web.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :ruptus_3000
   plug Ruptus3000Web.Router
 end
