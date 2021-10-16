@@ -56,7 +56,8 @@ defmodule Ruptus3000.MixProject do
       {:mimic, "~> 1.5", only: :test},
       {:flow, "~> 1.0"},
       {:polyline, "~> 1.3"},
-      {:ex_json_schema, "~> 0.9.0"}
+      {:ex_json_schema, "~> 0.9.0"},
+      {:pow, "~> 1.0.25"}
     ]
   end
 
