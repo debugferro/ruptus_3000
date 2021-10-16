@@ -1,0 +1,26 @@
+<h1>Listing Api Credentials</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Token</th>
+      <th>Options</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for api_credential <- @api_credentials do %>
+    <tr>
+      <td><%= api_credential.title %></td>
+      <td><%= api_credential.token %></td>
+      <td>
+        <%= link "Edit", to: Routes.api_credentials_path(@conn, :edit, api_credential) %>
+        <%= link "Delete", to: Routes.api_credentials_path(@conn, :delete, api_credential), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New API Credential", to: Routes.api_credentials_path(@conn, :new) %></span>
