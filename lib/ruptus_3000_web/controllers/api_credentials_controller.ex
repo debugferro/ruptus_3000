@@ -1,7 +1,14 @@
 defmodule Ruptus3000Web.ApiCredentialsController do
   use Ruptus3000Web, :controller
+
   alias Ruptus3000.Users
   alias Ruptus3000.Users.ApiCredentials
+
+  @create_msg "Credential created"
+  @update_msg "Credential updated successfully"
+  @delete_msg "API Credential deleted successfully"
+  @not_found_msg "API Credential not found"
+  @not_authorized_msg "Not authorized"
 
   plug Ruptus3000Web.Middlewares.CurrentUser
 
@@ -23,7 +30,7 @@ defmodule Ruptus3000Web.ApiCredentialsController do
     case Users.create_api_credentials(credentials_params) do
       {:ok, credential} ->
         conn
-        |> put_flash(:info, "Credential created")
+        |> put_flash(:info, @create_msg)
         |> redirect(to: Routes.api_credentials_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -49,7 +56,7 @@ defmodule Ruptus3000Web.ApiCredentialsController do
         with true <- Users.is_authorized?(credential.user_id, conn.current_user.id),
              {:ok, _credential} <- Users.update_api_credential(credential, %{title: title}) do
           conn
-          |> put_flash(:info, "Credential updated successfully")
+          |> put_flash(:info, @update_msg)
           |> redirect(to: Routes.api_credentials_path(conn, :index))
         else
           false ->
@@ -68,7 +75,7 @@ defmodule Ruptus3000Web.ApiCredentialsController do
     with {:ok, credential} <- Users.get_api_credential(id),
          :ok <- Users.delete_api_credential(credential, conn.current_user.id) do
       conn
-      |> put_flash(:info, "API Credential deleted successfully")
+      |> put_flash(:info, @delete_msg)
       |> redirect(to: Routes.api_credentials_path(conn, :index))
     else
       _any -> not_found_return(conn)
@@ -77,13 +84,13 @@ defmodule Ruptus3000Web.ApiCredentialsController do
 
   defp not_found_return(conn) do
     conn
-    |> put_flash(:info, "API Credential not found")
+    |> put_flash(:info, @not_found_msg)
     |> redirect(to: Routes.api_credentials_path(conn, :index))
   end
 
   defp not_authorized_return(conn) do
     conn
-    |> put_flash(:info, "Not authorized")
+    |> put_flash(:info, @not_authorized_msg)
     |> redirect(to: Routes.api_credentials_path(conn, :index))
   end
 end
