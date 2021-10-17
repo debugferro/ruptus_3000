@@ -6,7 +6,7 @@ defmodule Ruptus3000Web.ApiCredentialsController do
   plug Ruptus3000Web.Middlewares.CurrentUser
 
   def index(conn, _params) do
-    api_credentials = Users.list_user_api_credentials(1)
+    api_credentials = Users.list_user_api_credentials(conn.current_user.id)
     render(conn, "index.html", api_credentials: api_credentials)
   end
 
