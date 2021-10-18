@@ -67,37 +67,37 @@ defmodule Ruptus3000.Driver.FilterTest do
 
   describe "Filter handler" do
     test "If a drivers total distance is less then his/her vehicle max range,
-    and his/her total time is less then the total time, it will return true" do
+    and his/her total time is less then the total time, it will return the driver" do
       result = Filter.handle({:ok, @allowed_driver, @delivery_data, @result})
 
       assert {:ok, @allowed_driver, @delivery_data, @result} = result
     end
 
-    test "If a drivers total time is more then the max time, it will return false" do
+    test "If a drivers total time is more then the max time, it will return an error" do
       result = Filter.handle({:ok, @not_allowed_driver_1, @delivery_data, @result})
 
-      assert {:error, "Tempo ou distância máxima ultrapassada", :no_drivers} = result
+      assert {:error, _, :no_drivers} = result
     end
 
     test "If a drivers total distance is more then his/her vehicle max range,
-    it will return false" do
+    it will return an error" do
       result = Filter.handle({:ok, @not_allowed_driver_2, @delivery_data, @result})
 
-      assert {:error, "Tempo ou distância máxima ultrapassada", :no_drivers} = result
+      assert {:error, _, :no_drivers} = result
     end
 
     test "If a drivers total distance is less then his/her vehicle max range,
-    it will return true" do
+    it will return the driver" do
       result = Filter.handle({:ok, @allowed_driver_2, @delivery_data, @result})
 
       assert {:ok, @allowed_driver_2, @delivery_data, @result} = result
     end
 
     test "If a drivers total distance is more then his/her vehicle max range,
-    it will return false (duration condition)" do
+    it will return an error (duration condition)" do
       result = Filter.handle({:ok, @not_allowed_driver_3, @delivery_data, @result})
 
-      assert {:error, "Tempo ou distância máxima ultrapassada", :no_drivers} = result
+      assert {:error, _, :no_drivers} = result
     end
 
     test "It passes an error forward when it receives an error argument" do
