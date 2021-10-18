@@ -6,7 +6,7 @@ defmodule Ruptus3000.Routing.HandleRouting do
   @behaviour Ruptus3000.Routing.Behaviour.Main
   alias Ruptus3000.Types.Error
   alias Ruptus3000.Driver.HandleDriver
-  alias Ruptus3000.Routing.{GetDeliveryPath, CheckPriority, SelectBestDriver, GetVehicles, BuildResponse}
+  alias Ruptus3000.Routing.{GetDeliveryPath, CheckPriority, SelectBestDriver, GetVehicles, BuildResponse, RecordData}
 
   @spec start(map) :: {:ok, map()} | Error.detailed_tuple() | Error.basic_tuple()
   def start(delivery_data) do
@@ -17,6 +17,7 @@ defmodule Ruptus3000.Routing.HandleRouting do
     |> CheckPriority.handle()
     |> SelectBestDriver.handle()
     |> BuildResponse.handle()
+    |> RecordData.handle()
   end
 
   defp drivers_handlers({:ok, delivery_data, result} = data) do
