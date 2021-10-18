@@ -1,5 +1,6 @@
 defmodule Ruptus3000Web.Router do
   use Ruptus3000Web, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,16 +15,31 @@ defmodule Ruptus3000Web.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Ruptus3000Web do
+  pipeline :protected_api do
+    plug Ruptus3000Web.Middlewares.ApiAuthentication
+  end
+
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
+  scope "/" do
     pipe_through :browser
 
+    pow_routes()
+  end
+
+  scope "/", Ruptus3000Web do
+    pipe_through [:protected, :browser]
+
     get "/", PageController, :index
+    resources "/api_credentials", ApiCredentialsController
     resources "/vehicle_type", VehicleTypeController
   end
 
-  # Other scopes may use custom stacks.
   scope "/api/v1", Ruptus3000Web.Api.V1 do
-    pipe_through :api
+    pipe_through [:api, :protected_api]
 
     post "/delivery/route", DeliveryController, :route
   end

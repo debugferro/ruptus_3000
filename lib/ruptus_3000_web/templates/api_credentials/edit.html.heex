@@ -1,0 +1,5 @@
+<h1>Edit API Credential</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.api_credentials_path(@conn, :update, @api_credentials)) %>
+
+<span><%= link "Back", to: Routes.api_credentials_path(@conn, :index) %></span>

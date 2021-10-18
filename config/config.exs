@@ -47,6 +47,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :ruptus_3000, :pow,
+  user: Ruptus3000.Users.User,
+  repo: Ruptus3000.Repo
+
 config :ruptus_3000, routing_api_key: System.get_env("ROUTING_API_KEY")
 
 # Import environment specific config. This must remain at the bottom
