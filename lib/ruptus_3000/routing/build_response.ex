@@ -7,8 +7,15 @@ defmodule Ruptus3000.Routing.BuildResponse do
 
   @spec handle({:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
           {:ok, map()} | Error.basic_tuple() | Error.detailed_tuple()
-  def handle({:ok, delivery_data, %{selected_driver: driver} = result}) do
-    {:ok, %{
+  def handle({:ok, delivery_data, result}) do
+    {:ok, delivery_data, build_response_map(result, delivery_data)}
+  end
+
+  def handle(error), do: error
+
+  defp build_response_map(%{selected_driver: driver} = result, delivery_data) do
+    Map.put(result, :result,
+    %{
       selected_driver: %{
         id: driver["id"],
         full_name: driver["full_name"],
@@ -23,10 +30,8 @@ defmodule Ruptus3000.Routing.BuildResponse do
           polyline: build_polyline(driver .to_collect_point.polyline, result.to_delivery_point.polyline)
         }
       }
-    }}
+    })
   end
-
-  def handle(error), do: error
 
   defp build_polyline(collect_polyline, delivery_polyline) do
     Polyline.encode(Polyline.decode(collect_polyline) ++ Polyline.decode(delivery_polyline))
