@@ -1,8 +1,8 @@
-defmodule Ruptus3000.Delivery.Shipment do
+defmodule Ruptus3000.Delivery.Report do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "shipments" do
+  schema "reports" do
     field :driver_localization, {:array, :float}
     field :full_polyline, :string
     field :to_collect_distance, :float
@@ -19,8 +19,8 @@ defmodule Ruptus3000.Delivery.Shipment do
   end
 
   @doc false
-  def changeset(shipment, attrs) do
-    shipment
+  def changeset(report, attrs) do
+    report
     |> cast(attrs, [:to_collect_distance, :to_collect_duration, :to_collect_polyline, :to_deliver_distance, :to_deliver_duration, :to_deliver_polyline, :full_polyline, :to_collect_localization, :to_deliver_localization, :driver_localization, :driver_id])
     |> validate_required([:to_collect_distance, :to_collect_duration, :to_collect_polyline, :to_deliver_distance, :to_deliver_duration, :to_deliver_polyline, :full_polyline, :to_collect_localization, :to_deliver_localization, :driver_localization, :driver_id])
   end

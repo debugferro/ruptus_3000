@@ -6,12 +6,12 @@ defmodule Ruptus3000.Delivery do
   import Ecto.Query, warn: false
   alias Ruptus3000.Repo
 
-  alias Ruptus3000.Delivery.{Driver, Shipment}
+  alias Ruptus3000.Delivery.{Driver, Report}
 
   @doc """
-    Parses data from handle_routing handlers and create shipment record.
+    Parses data from handle_routing handlers and create report record.
   """
-  def create_shipment_from_result(%{
+  def create_report_from_result(%{
         route: %{
           to_collect_point: collect_point,
           to_delivery_point: delivery_point,
@@ -38,12 +38,12 @@ defmodule Ruptus3000.Delivery do
       driver_localization: [driver.localization["latitude"], driver.localization["longitude"]],
       driver_id: create_or_find_driver(driver) |> Map.get(:id)
     }
-    |> create_shipment()
+    |> create_report()
   end
 
-  def create_shipment(attrs \\ %{}) do
-    %Shipment{}
-    |> Shipment.changeset(attrs)
+  def create_report(attrs \\ %{}) do
+    %Report{}
+    |> Report.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -59,7 +59,7 @@ defmodule Ruptus3000.Delivery do
     |> Repo.all()
   end
 
-  def get_shipment(id), do: Repo.get(Shipment, id) |> Repo.preload(:driver)
+  def get_report(id), do: Repo.get(Report, id) |> Repo.preload(:driver)
 
   def create_or_find_driver(driver) do
     case find_driver_where(external_id: driver[:id]) do

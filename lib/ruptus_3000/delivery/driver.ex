@@ -5,7 +5,7 @@ defmodule Ruptus3000.Delivery.Driver do
   schema "drivers" do
     field :external_id, :integer
     field :full_name, :string
-    has_many :shipments, Ruptus3000.Delivery.Shipment
+    has_many :reports, Ruptus3000.Delivery.Report
     timestamps()
   end
 

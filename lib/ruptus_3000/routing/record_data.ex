@@ -10,7 +10,7 @@ defmodule Ruptus3000.Routing.RecordData do
           {:ok, map()} | Error.basic_tuple() | Error.detailed_tuple()
   def handle({:ok, result} = response) do
     Task.start(fn ->
-      Delivery.create_shipment_from_result(result)
+      Delivery.create_report_from_result(result)
     end)
 
     response
