@@ -14,6 +14,8 @@ defmodule Ruptus3000.Application do
       Ruptus3000Web.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Ruptus3000.PubSub},
+      # Starting Presence module
+      Ruptus3000Web.Presence,
       # Start the Endpoint (http/https)
       Ruptus3000Web.Endpoint
       # Start a worker by calling: Ruptus3000.Worker.start_link(arg)
