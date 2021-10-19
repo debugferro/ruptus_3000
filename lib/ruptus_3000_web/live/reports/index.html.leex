@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+<div>
+  <div phx-update="ignore" id="map">
+  </div>
+  <div>
+    <%= if @selected_report do %>
+    <p>SELECTED<%= @selected_report |> Map.get(:id) %></p>
+    <%= else %>
+      <p>Select a report to see details</p>
+    <% end %>
+  </div>
+  <%= for report <- @reports do %>
+    <div class="report-card" phx-hook="SelectReport" id="report-<%= report |> Map.get(:id) %>" report-id="<%= report |> Map.get(:id) %>">
+      <div full-polyline="<%= report |> Map.get(:full_polyline) %>" id="data-<%= report |> Map.get(:id) %>"></div>
+      <p>REPORT #<%= report |> Map.get(:id) %></p>
+    </div>
+  <% end %>
+</div>
