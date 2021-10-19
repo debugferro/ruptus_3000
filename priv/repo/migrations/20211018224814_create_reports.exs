@@ -14,6 +14,7 @@ defmodule Ruptus3000.Repo.Migrations.CreateReports do
       add :to_deliver_localization, {:array, :float}
       add :driver_localization, {:array, :float}
       add :driver_id, references(:drivers, on_delete: :nothing)
+      add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end
