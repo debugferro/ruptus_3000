@@ -35,6 +35,15 @@ defmodule Ruptus3000.Delivery do
 
   def get_report(id), do: Repo.get(Report, id) |> Repo.preload(:driver) |> Repo.preload([rejected_drivers: [:driver]])
 
+  def get_user_reports(user_id) do
+    Report
+    |> where(user_id: ^user_id)
+    |> order_by(desc: :inserted_at)
+    |> limit(10)
+    |> Repo.all()
+    # |> Repo.preload(:driver) |> Repo.preload([rejected_drivers: [:driver]])
+  end
+
   def create_or_find_driver(driver) do
     case find_driver_where(external_id: driver_id(driver)) do
       [] -> build_driver_attrs(driver) |> create_driver() |> return_driver()
