@@ -87,3 +87,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+#map {
+  height: 400px;
+}
