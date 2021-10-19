@@ -1,8 +1,8 @@
-defmodule Ruptus3000.Repo.Migrations.CreateShipments do
+defmodule Ruptus3000.Repo.Migrations.CreateReports do
   use Ecto.Migration
 
   def change do
-    create table(:shipments) do
+    create table(:reports) do
       add :to_collect_distance, :float
       add :to_collect_duration, :float
       add :to_collect_polyline, :string
@@ -18,6 +18,6 @@ defmodule Ruptus3000.Repo.Migrations.CreateShipments do
       timestamps()
     end
 
-    create index(:shipments, [:driver_id])
+    create index(:reports, [:driver_id])
   end
 end
