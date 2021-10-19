@@ -5,6 +5,7 @@ defmodule Ruptus3000.Users.User do
   schema "users" do
     pow_user_fields()
     has_many :api_credentials, Ruptus3000.Users.ApiCredentials
+    has_many :reports, Ruptus3000.Delivery.Report
 
     timestamps()
   end
