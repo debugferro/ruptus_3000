@@ -13,7 +13,7 @@ defmodule Ruptus3000.Driver.SelectBestDriverTest do
         HandlersHelpers.custom_driver(30, 2),
         HandlersHelpers.custom_driver(40, 1)
       ]}
-      {:ok, ^expected_choice, ^result} = SelectBestDriver.handle({:ok, result})
+      {:ok, _, %{selected_driver: ^expected_choice}} = SelectBestDriver.handle({:ok, %{}, result})
     end
 
     test "2) It selects the fastest driver in the list" do
@@ -24,7 +24,7 @@ defmodule Ruptus3000.Driver.SelectBestDriverTest do
         HandlersHelpers.custom_driver(43.4, 3),
         HandlersHelpers.custom_driver(40.1, 4)
       ]}
-      {:ok, ^expected_choice, ^result} = SelectBestDriver.handle({:ok, result})
+      {:ok, _, %{selected_driver: ^expected_choice}} = SelectBestDriver.handle({:ok, %{}, result})
     end
 
     test "It selects the driver with the lowest index when there is a tie" do
@@ -35,12 +35,12 @@ defmodule Ruptus3000.Driver.SelectBestDriverTest do
         HandlersHelpers.custom_driver(30, 4),
         expected_choice
       ]}
-      {:ok, ^expected_choice, ^result} = SelectBestDriver.handle({:ok, result})
+      {:ok, _, %{selected_driver: ^expected_choice}} = SelectBestDriver.handle({:ok, %{}, result})
     end
 
     test "It returns an error when drivers list is empty so there is no best driver" do
       result = %{drivers: []}
-      {:error, _msg, :no_drivers} = SelectBestDriver.handle({:ok, result})
+      {:error, _msg, :no_drivers} = SelectBestDriver.handle({:ok, %{}, result})
     end
 
     test "It passes an error forward when it receives an error argument" do
