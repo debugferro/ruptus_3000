@@ -20,7 +20,7 @@ defmodule Ruptus3000.Routing.CheckPriorityTest do
   describe "CheckPriority handler on prioritizing drivers" do
     test "It should only return drivers with motorcycle" do
       result = CheckPriority.handle({:ok, %{}, Map.put(@result, :to_delivery_point, %{distance: 3})})
-      assert {:ok, %{drivers: [%{
+      assert {:ok, _, %{drivers: [%{
         "vehicle" => "motorcycle"
         },
         %{
@@ -31,7 +31,7 @@ defmodule Ruptus3000.Routing.CheckPriorityTest do
 
     test "It should only return drivers with bikes" do
       result = CheckPriority.handle({:ok, %{}, Map.put(@result, :to_delivery_point, %{distance: 1})})
-      assert {:ok, %{drivers: [%{
+      assert {:ok, _, %{drivers: [%{
         "vehicle" => "bike"
         },
         %{
