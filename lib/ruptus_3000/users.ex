@@ -57,5 +57,11 @@ defmodule Ruptus3000.Users do
     |> Repo.update()
   end
 
+  def api_credential_where(keywords) do
+    ApiCredentials
+    |> where(^keywords)
+    |> Repo.one()
+  end
+
   def is_authorized?(api_credential_user_id, user_id), do: api_credential_user_id == user_id
 end
