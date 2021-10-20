@@ -26,10 +26,12 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import { SelectReport } from './select'
+import { ReportDisplayer } from './report_displayer'
 import { initMap } from './map'
 
 const Hooks = {}
 Hooks.SelectReport = SelectReport;
+Hooks.ReportDisplayer = ReportDisplayer;
 if(document.getElementById("map")) {
   initMap();
 }
