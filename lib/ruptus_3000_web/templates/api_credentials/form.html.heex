@@ -1,15 +1,17 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [class: "base-form"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+      <p>Oops, algo deu errado! Cheque os erros abaixo:</p>
     </div>
   <% end %>
 
-  <%= label f, :title %>
-  <%= text_input f, :title %>
-  <%= error_tag f, :title %>
+  <section>
+    <%= label f, :title, "Título" %>
+    <%= text_input f, :title %>
+    <%= error_tag f, :title %>
+  </section>
 
-  <div>
-    <%= submit "Submit" %>
+  <div class="form-send">
+    <%= submit "Enviar" %>
   </div>
 <% end %>
