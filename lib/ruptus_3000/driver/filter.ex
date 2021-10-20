@@ -13,7 +13,7 @@ defmodule Ruptus3000.Driver.Filter do
     max_time = delivery_data["max_delivery_time"]
     case is_driver_valid?(driver, result, max_time) do
       true -> {:ok, driver, delivery_data, result}
-      false -> {:error, "Tempo ou distância máxima ultrapassada", :no_drivers}
+      false -> {:error, "Tempo ou distância máxima ultrapassada", :out_of_limits}
     end
   end
 

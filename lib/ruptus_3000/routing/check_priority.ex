@@ -8,8 +8,8 @@ defmodule Ruptus3000.Routing.CheckPriority do
 
   @spec handle({:ok, map(), map()} | Error.basic_tuple() | Error.detailed_tuple()) ::
           Error.basic_tuple() | Error.detailed_tuple() | {:ok, map()}
-  def handle({:ok, _delivery_data, result}) do
-    {:ok, Map.put(result, :drivers, check_priority(result))}
+  def handle({:ok, delivery_data, result}) do
+    {:ok, delivery_data, Map.put(result, :drivers, check_priority(result))}
   end
 
   def handle({:error, message, status}), do: {:error, message, status}

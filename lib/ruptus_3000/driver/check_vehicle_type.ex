@@ -12,7 +12,7 @@ defmodule Ruptus3000.Driver.CheckVehicleType do
   def handle({:ok, driver, delivery_data, result}) do
     case is_driver_vehicle_valid?(result.vehicles.label_list, driver["vehicle"]) do
       true -> {:ok, driver, delivery_data, result}
-      false -> {:error, "Tipo de veículo não permite essa viagem", :vehicle_not_allowed}
+      false -> {:error, "Tipo de veículo não permite essa viagem", :vehicle_type_not_allowed}
     end
   end
 
