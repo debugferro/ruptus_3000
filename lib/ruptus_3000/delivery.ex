@@ -68,4 +68,12 @@ defmodule Ruptus3000.Delivery do
       full_name: full_name
     }
   end
+
+  def authorize_report(report, user), do: report.user_id == user.id
+
+  def exhibit_report(report) do
+    {:ok, report_encoded} = Poison.encode(report)
+    {:ok, decoded} = Poison.decode(report_encoded)
+    decoded
+  end
 end
