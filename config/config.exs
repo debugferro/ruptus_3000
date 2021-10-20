@@ -49,7 +49,8 @@ config :phoenix, :json_library, Jason
 
 config :ruptus_3000, :pow,
   user: Ruptus3000.Users.User,
-  repo: Ruptus3000.Repo
+  repo: Ruptus3000.Repo,
+  web_module: Ruptus3000Web
 
 config :ruptus_3000, routing_api_key: System.get_env("ROUTING_API_KEY")
 
