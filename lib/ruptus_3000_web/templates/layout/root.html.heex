@@ -10,19 +10,26 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
-    <header>
-      <section class="container">
-        <nav>
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
-        </a>
+    <header class="header">
+      <section class="header-container">
+        <div class="title-container">
+          <div class="logo-container">
+            <img src="/images/ruptus3000.png" />
+          </div>
+          <div class="title">
+            <h1>Ruptus 3000</h1>
+          </div>
+        </div>
+        <%= if Pow.Plug.current_user(@conn) do %>
+          <div class="header-menu">
+            <%= link "Reportes", to: Routes.report_index_path(@conn, Ruptus3000Web.ReportsLive.Index) %>
+            <%= link "Credenciais", to: Routes.api_credentials_path(@conn, :index) %>
+            <%= link "Tipos de Veículos", to: Routes.vehicle_type_path(@conn, :index) %>
+          </div>
+          <div class="header-logout">
+            <%= link "Logout", to: Routes.pow_session_path(@conn, :delete), method: :delete %>
+          </div>
+        <% end %>
       </section>
     </header>
     <%= @inner_content %>
