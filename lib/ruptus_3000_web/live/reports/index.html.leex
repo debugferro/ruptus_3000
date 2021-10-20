@@ -6,20 +6,68 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
 
-<div>
-  <div phx-update="ignore" id="map">
-  </div>
-  <div>
-    <%= if @selected_report do %>
-    <p>SELECTED<%= @selected_report |> Map.get(:id) %></p>
-    <%= else %>
-      <p>Select a report to see details</p>
-    <% end %>
-  </div>
-  <%= for report <- @reports do %>
-    <div class="report-card" phx-hook="SelectReport" id="report-<%= report |> Map.get(:id) %>" report-id="<%= report |> Map.get(:id) %>">
-      <div full-polyline="<%= report |> Map.get(:full_polyline) %>" id="data-<%= report |> Map.get(:id) %>"></div>
-      <p>REPORT #<%= report |> Map.get(:id) %></p>
+<div class="card reports-container">
+  <section class="map-section">
+    <div id="displayer" phx-hook="ReportDisplayer"></div>
+    <div phx-update="ignore" id="map">
     </div>
-  <% end %>
+  </section>
+  <section class="details-section">
+    <%= if @selected_report do %>
+    <div class="details-header">
+      <img class="report-icon" src="/images/report-icon.svg" />
+      <h3>Requisição #<%= @selected_report |> Map.get(:id) %></h3>
+    </div>
+    <div class="report-details">
+      <div class="details">
+        <section>
+          <img src="/images/person-icon.svg" />
+          <span>Driver responsável</span>
+          <p><%= Helpers.get_report_driver_name(@selected_report) %></p>
+        </section>
+        <section>
+          <img src="/images/time-icon.svg" />
+          <span>Tempo estimado para entrega</span>
+          <p><%= Helpers.get_estimated_time(@selected_report) %></p>
+        </section>
+        <section>
+          <img src="/images/distance-icon.svg" />
+          <span>Distância total</span>
+          <p><%= Helpers.get_total_distance(@selected_report) |> Float.round(2) %> KM</p>
+        </section>
+      </div>
+    </div>
+    <div>
+      <details>
+        <summary>Detalhes/Drivers não elegíveis</summary>
+        <%= for rejected_driver <- @selected_report |> Map.get(:rejected_drivers) do %>
+          <div class="rejection-container">
+            <div class="rejection-icon">
+              <svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-times-circle fa-w-16 fa-3x" width="512"  height="512" ><path fill="#212529" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z" class=""></path></svg>
+            </div>
+            <div class="rejection-details">
+              <p><img src="/images/person-icon.svg" /><%= Helpers.get_rejected_driver_name(rejected_driver) %></p>
+              <span><%= rejected_driver |> Map.get(:message) %></span>
+              <small><%= rejected_driver |> Map.get(:error_type) %></small>
+            </div>
+          </div>
+        <% end %>
+      </details>
+    </div>
+    <%= else %>
+      <div class="details-header">
+        <img class="report-icon" src="/images/report-icon.svg" />
+        <h3>Detalhes</h3>
+      </div>
+      <p>Selecione um Reporte na lista para ver detalhes</p>
+    <% end %>
+  </section>
+  <section class="list-section">
+    <%= for report <- @reports do %>
+      <div class="report-card <%= Helpers.check_selection(@selected_report, report) %>" phx-hook="SelectReport" id="report-<%= report |> Map.get(:id) %>" report-id="<%= report |> Map.get(:id) %>">
+        <p>Requisição #<%= report |> Map.get(:id) %></p>
+        <small><%= Helpers.parse_time(report |> Map.get(:inserted_at)) %></small>
+      </div>
+    <% end %>
+  </section>
 </div>
