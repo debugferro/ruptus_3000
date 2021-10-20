@@ -1,7 +1,7 @@
 defmodule Ruptus3000.Users.ApiCredentials do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @derive [Poison.Encoder]
   schema "api_credentials" do
     field :token, :string
     field :title, :string

@@ -1,7 +1,17 @@
 defmodule Ruptus3000.Delivery.Report do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @derive {Poison.Encoder, only: [:to_collect_distance,
+  :to_collect_duration,
+  :to_collect_polyline,
+  :to_deliver_distance,
+  :to_deliver_duration,
+  :to_deliver_polyline,
+  :full_polyline,
+  :to_collect_localization,
+  :to_deliver_localization,
+  :driver_localization,
+  :driver_id]}
   schema "reports" do
     field :driver_localization, {:array, :float}
     field :full_polyline, :string
