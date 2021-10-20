@@ -33,8 +33,10 @@ defmodule Ruptus3000Web.Router do
   scope "/", Ruptus3000Web do
     pipe_through [:protected, :browser]
 
-    get "/", PageController, :index
-    resources "/api_credentials", ApiCredentialsController
+    # get "/", PageController, :index
+    resources "/", ApiCredentialsController, only: [:index]
+    resources "/api_credentials", ApiCredentialsController, except: [:index]
+    live "/reports", ReportsLive.Index, as: :report_index
     resources "/vehicle_type", VehicleTypeController
   end
 

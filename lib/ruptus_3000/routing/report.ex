@@ -33,8 +33,9 @@ defmodule Ruptus3000.Routing.Report do
          } = result,
          delivery_data
        ) do
+    user_id = Users.api_credential_where(token: delivery_data["api_key"]) |> Map.get(:user_id)
     %{
-      user_id: Users.api_credential_where(token: delivery_data["api_key"]) |> Map.get(:user_id),
+      user_id: user_id,
       to_collect_distance: collect_point.distance,
       to_collect_duration: collect_point.duration,
       to_collect_polyline: collect_point.polyline,
@@ -55,17 +56,22 @@ defmodule Ruptus3000.Routing.Report do
     }
     |> Delivery.create_report()
     |> record_rejections(result)
+    push_update_event(user_id)
   end
 
   defp record_rejections({:ok, report}, %{rejected_drivers: rejected_drivers}) do
     Enum.each(rejected_drivers, fn rejected_driver ->
       %{
         driver_id: Delivery.create_or_find_driver(rejected_driver) |> Map.get(:id),
-        message: rejected_driver.error_msg,
-        error_type: Phoenix.Naming.humanize(rejected_driver[:error_type]) || "Not known",
+        message: rejected_driver[:error_msg] || "Tempo ou distância relativamente altos",
+        error_type: Phoenix.Naming.humanize(rejected_driver[:error_type] || :not_known),
         report_id: report |> Map.get(:id)
       }
       |> Delivery.create_rejected_driver()
     end)
+  end
+
+  defp push_update_event(user_id) do
+    Ruptus3000Web.Endpoint.broadcast_from(self(), "reports:#{user_id}", "update_reports", %{})
   end
 end

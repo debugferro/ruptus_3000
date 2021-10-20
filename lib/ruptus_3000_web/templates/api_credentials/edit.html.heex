@@ -1,5 +1,15 @@
-<h1>Edit API Credential</h1>
+<div class="card">
+  <div class="details-header space-between">
+    <div class="title">
+      <img style="width: 1.5rem" class="report-icon" src="/images/list-icon.svg"/>
+      <h3 style="font-size: 1.5rem; margin-left: 1rem;">Editar Token</h3>
+    </div>
+    <div class="back-btn">
+    <%= link to: Routes.api_credentials_path(@conn, :index) do %>
+      <img class="report-icon" src="/images/back-icon.svg"/>
+    <% end %>
+    </div>
+  </div>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.api_credentials_path(@conn, :update, @api_credentials)) %>
-
-<span><%= link "Back", to: Routes.api_credentials_path(@conn, :index) %></span>
+  <%= render "form.html", Map.put(assigns, :action, Routes.api_credentials_path(@conn, :update, @api_credentials)) %>
+</div>
