@@ -1,0 +1,291 @@
+.card {
+  background-color: var(--white);
+    margin: 0 auto;
+    /* margin-top: 2%; */
+    box-shadow: 1px 0px 8px 3px #0000001c;
+    width: 90%;
+    /* border-radius: 12px; */
+    padding: 25px;
+    height: 100%;
+    padding-top: 6rem;
+    max-width: 100rem;
+}
+
+.reports-container {
+  display: grid;
+  grid-template-areas:
+      "map list"
+      "details details";
+  grid-template-columns: 80% 20%;
+  /* grid-template-rows: 54% 50%; */
+  /* grid-template-rows: 1fr 1fr; */
+  gap: 1rem;
+  /* height: 56rem; */
+}
+
+.map-section {
+  grid-area: map;
+  z-index: 1;
+}
+
+.list-section {
+  overflow-y: scroll;
+  grid-area: list;
+  display: grid;
+  gap: 0.7rem;
+  height: 33rem;
+}
+
+.list-section::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 50px;
+}
+
+/* Track */
+.list-section::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 50px;
+}
+
+/* Handle */
+.list-section::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+.list-section::-webkit-scrollbar-thumb:hover {
+  background: #b6b4b4;
+}
+
+.details-section {
+  grid-area: details;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  min-height: 20rem;
+}
+
+.details-section > p {
+  align-self: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.report-card {
+  background-color: var(--orange);
+  border-radius: 1rem;
+  padding: 1rem;
+  height: 5rem;
+  box-shadow: 2px 0px 4px 0px #0000004a;
+  margin: 0 1rem;
+  color: var(--white);
+  cursor: pointer;
+  transition: 500ms;
+}
+
+.report-card > p {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.report-card > small {
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.details > section > span {
+  border-bottom: 1px dotted var(--orange);
+  font-weight: 600;
+  align-self: center;
+}
+
+.details > section {
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem;
+}
+
+.details > section > p {
+  align-self: center;
+  font-weight: 300;
+}
+
+.details {
+  display: flex;
+    justify-content: center;
+    align-content: space-between;
+    gap: 10%;
+}
+
+.details > section > img {
+  width: 10%;
+  align-self: center;
+}
+
+.report-icon {
+  width: 1.5rem;
+}
+
+.details-header {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid var(--orange);
+  padding-bottom: 1rem;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.details-header > h3 {
+  text-transform: uppercase;
+}
+
+.rejection-container {
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 0;
+}
+
+.rejection-icon {
+  align-self: center;
+}
+
+.rejection-icon > svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.rejection-icon > svg > path {
+  fill: #e6283a;
+}
+
+.rejection-details {
+  border-left: 1px solid #e6283a;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.rejection-details > p > img {
+  width: 1rem;
+  margin-right: 1rem;
+}
+
+.rejection-details > p {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.rejection-details > small {
+  font-weight: 200;
+}
+
+.report-card:hover {
+  transition: 500ms;
+  transform: scale(1.06);
+}
+
+.report-selected {
+  transition: 500ms;
+  background-color: #e6530f;
+}
+
+.table-container {
+  display: flex;
+  place-content: center;
+}
+
+.table-container > table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container > table > thead {
+  border-bottom: 1px solid #f7a42b;
+}
+
+.table-container > table > thead > tr > th {
+  font-size: 1.3rem;
+
+}
+
+.table-container > table > thead > tr > th > img {
+  width: 1rem;
+  margin-right: 1rem;
+}
+
+.table-container > table > tbody {
+  text-align-last: center;
+  font-size: 1.2rem;
+}
+
+.table-container > table > tbody > tr > td > div {
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+}
+
+.table-container > table > tbody > tr > td {
+  padding: 1.2rem;
+  text-align: -webkit-center;
+}
+
+.table-container > table > tbody > tr > td > div > a > img {
+  width: 1.4rem;
+}
+
+.column-flex-with-gap {
+  gap: 2rem;
+  flex-direction: column;
+  display: flex;
+}
+
+.add-btn > a {
+  text-decoration: none;
+  text-transform: uppercase;
+  display: flex;
+  gap: 1rem;
+  background-color: #f7a42b;
+  border-radius: 1rem;
+  box-shadow: 1px 1px 2px #0000007a;
+  padding: 0.7rem;
+  transition: 400ms;
+  width: fit-content;
+}
+
+.add-btn > a:hover  {
+  background-color: #e6530f;
+  transition: 400ms;
+}
+
+.title {
+  display: flex;
+}
+
+.add-btn > a > span {
+  font-size: 1.5rem;
+  color: white;
+  font-weight: 700;
+}
+
+.add-btn > a > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  align-self: center;
+}
+
+.add-btn > a > svg > path {
+  fill: white;
+}
+
+.back-btn {
+  margin-right: 2rem;
+}
+
+.back-btn > a > img {
+  width: 2rem;
+}
