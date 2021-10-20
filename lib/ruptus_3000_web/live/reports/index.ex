@@ -1,10 +1,12 @@
-
 defmodule Ruptus3000Web.ReportsLive.Index do
   use Ruptus3000Web, :live_view
 
+  alias Ruptus3000Web.ReportsLive.Helpers
   alias Ruptus3000Web.Live.Credentials
+  alias Ruptus3000.Delivery.Report
   alias Ruptus3000.Delivery
   alias Phoenix.PubSub
+  alias Phoenix.Socket.Broadcast
 
   @impl true
   def mount(_params, session, socket) do
@@ -17,22 +19,19 @@ defmodule Ruptus3000Web.ReportsLive.Index do
     end
   end
 
-  def handle_event("select_report", report, socket) do
-    IO.inspect(socket)
-    {:noreply, socket}
+  def handle_event("select_report", %{"report_id" => report_id}, socket) do
+    with %Report{} = report <- Delivery.get_report(report_id),
+      true <- Delivery.authorize_report(report, socket.assigns.current_user) do
+        {:noreply, assign(socket, selected_report: report) |> push_event("display-report", %{report: Delivery.exhibit_report(report)})}
+      else
+        _any -> {:noreply, socket}
+      end
   end
 
-  # defp get_user_boards(user) do
-  #   Table.participant_board(Table.find_participants_where(user_id: user.id))
-  # end
+  def handle_info(%Broadcast{event: "update_reports"}, socket) do
+    reports = Delivery.get_user_reports(socket.assigns.current_user.id)
+    {:noreply, socket |> assign(reports: reports)}
+  end
 
-  # def handle_event("delete_board", board, socket) do
-  #   user = BeaverBoard.Users.get!(socket.assigns.current_user.id)
-
-  #   board_id = Map.get(board, "id") |> String.to_integer()
-
-  #   BeaverBoard.Table.delete_board(BeaverBoard.Table.get_board!(board_id) |> IO.inspect)
-  #   {:noreply, assign(socket, boards: get_user_boards(user))}
-  # end
   defp topic(user_id), do: "reports:#{user_id}"
 end
