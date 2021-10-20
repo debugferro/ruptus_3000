@@ -12,3 +12,13 @@ To start executing API requests you need to create your API Token Credential thr
 
 ## ENDPOINTS
 
+* #### /api/v1/delivery/route
+
+* #### METHOD
+`POST`
+
+* #### URL PARAMS
+**Required**
+`apikey=[string]`
+
+* #### DATA PARAMS
