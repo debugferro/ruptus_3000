@@ -1,7 +1,7 @@
 defmodule Ruptus3000.Delivery.RejectedDriver do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @derive {Poison.Encoder, only: [:message, :error_type, :report_id, :driver_id]}
   schema "rejected_drivers" do
     field :error_type, :string
     field :message, :string
