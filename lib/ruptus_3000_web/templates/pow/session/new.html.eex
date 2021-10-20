@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="details-header space-between">
+    <div class="title">
+      <img style="width: 1.5rem" class="report-icon" src="/images/signin-icon.svg"/>
+      <h3 style="font-size: 1.5rem; margin-left: 1rem;">Iniciar Sessão</h3>
+    </div>
+  </div>
+
+  <%= form_for @changeset, @action, [as: :user, class: "base-form"], fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, algo deu errado! Por favor, cheque os erros abaixo.</p>
+      </div>
+    <% end %>
+    <section>
+    <%= label f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+    <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+    <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+    </section>
+    <section>
+    <%= label f, :password %>
+    <%= password_input f, :password %>
+    <%= error_tag f, :password %>
+    </section>
+    <div class="form-send">
+      <%= submit "Iniciar Sessão" %>
+    </div>
+  <% end %>
+  <span><%= link "Registrar", to: Routes.pow_registration_path(@conn, :new) %></span>
+</div>
