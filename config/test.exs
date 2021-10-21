@@ -9,7 +9,7 @@ config :ruptus_3000, Ruptus3000.Repo,
   username: "postgres",
   password: "postgres",
   database: "ruptus_3000_test#{System.get_env("MIX_TEST_PARTITION")}",
-  hostname: "localhost",
+  hostname: "postgres",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 

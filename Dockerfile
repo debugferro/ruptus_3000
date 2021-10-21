@@ -1,18 +1,19 @@
-FROM elixir:alpine
+FROM elixir:1.12-alpine
 
-RUN mkdir /app
+RUN apk add --no-cache inotify-tools build-base git nodejs npm
+RUN mix local.hex --force && \
+    mix local.rebar --force && \
+    mix archive.install hex phx_new --force
+
+RUN mkdir -p /app
 COPY . /app
+ENV MIX_ENV dev
+
+
+RUN cd /app && \
+    mix do deps.get, compile && \
+    npm install --prefix assets
+
+
 WORKDIR /app
-
-RUN apk add --update nodejs && apk add --update npm
-
-
 EXPOSE 4000
-
-RUN mix local.hex --force && mix local.rebar --force
-
-RUN cd ./assets && npm install && node node_modules/webpack/bin/webpack.js && cd ..
-
-RUN mix do deps.get, deps.compile
-
-CMD ["mix", "phx.server"]
