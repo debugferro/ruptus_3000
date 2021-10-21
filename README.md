@@ -1,5 +1,9 @@
 # RUPTUS3000
 
+<p align="center">
+  <img src="https://i.imgur.com/me7LpIA.jpeg">
+</p>
+
 To start Ruptus3000 server:
 
   * Insert your Google Routing API (or other routing api service) key inside the docker-compose.yml inside environment as `ROUTING_API_KEY`
