@@ -5,7 +5,7 @@ services:
     build:
       context: .
     environment:
-      ROUTING_API_KEY: AIzaSyCVaFLECtlvddnmgDijfC1j3wODHM_WpGk
+      ROUTING_API_KEY: INSERT.YOUR.API.KEY.HERE
       PGUSER: postgres
       PGPASSWORD: postgres
       PGDATABASE: ruptus_3000_dev
