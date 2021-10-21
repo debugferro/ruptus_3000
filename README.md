@@ -61,10 +61,11 @@ force=true will try to ignore as many errors in the payload as possible, and wil
 | address.state          | optional | String    | State abbreviation                      |
 | address.zip_code       | optional | String    | Waypoint zip code                       |
 
-**/* Semi-Optional parameters are not going to raise an error if param force is true.**
+**=> Semi-Optional parameters are not going to raise an error if param force is true.**
 
 <details>
  <summary>EXAMPLE</summary>
+ 
    ```json
    {
      "drivers": [
@@ -143,6 +144,7 @@ force=true will try to ignore as many errors in the payload as possible, and wil
      "max_delivery_time": 25.5
    }
    ```
+ 
 </details>
 <hr></hr>
 
