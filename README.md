@@ -2,13 +2,12 @@
 
 To start Ruptus3000 server:
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start the server with `iex -S mix phx.server`
-
+  * Insert your Google Routing API (or other routing api service) key inside the docker-compose.yml inside environment as `ROUTING_API_KEY`
+  * Build container with `docker-compose build`
+  * Start running it with `docker-compose up`
+  
 Now you can acces the dashboard through [`localhost:4000`](http://localhost:4000) from your browser and register.
 To start executing API requests you need to create your API Token Credential through the dashboard.
-
 
 ## ENDPOINTS
 
