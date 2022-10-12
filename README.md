@@ -4,6 +4,8 @@
   <img src="https://i.imgur.com/me7LpIA.jpeg">
 </p>
 
+Ruptus 3000 is a web application and an API to find the most suitable delivery men to perform a certain delivery task based on business rules (i.e. type of vehicle, distance, etc.).
+
 To start RUPTUS 3000 server:
 
   * Insert your Google Routing API (or other routing api service) key inside the docker-compose.yml inside environment as `ROUTING_API_KEY`
